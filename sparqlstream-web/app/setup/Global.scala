@@ -18,6 +18,7 @@ object Global extends GlobalSettings {
     new ApiWrapper("social",esper.system)
     new ApiWrapper("hl7",esper.system)
     new ApiWrapper("weathermap",esper.system)
+    //new ApiWrapper("hsl", esper.system)
 
   }  
   

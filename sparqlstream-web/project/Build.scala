@@ -19,7 +19,8 @@ object ApplicationBuild extends Build {
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
       // Add your own project settings here 
-        scalacOptions ++= Seq("-feature"),
+        scalacOptions ++= Seq("-unchecked", "-deprecation", "-target:jvm-1.6", "-feature"),
+        javacOptions ++= Seq("-source", "1.6", "-target", "1.6"),
         resolvers ++= Seq(
          //DefaultMavenRepository,         
          //("Local ivy Repository" at "file://"+Path.userHome.absolutePath+"/.ivy2/local")

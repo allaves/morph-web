@@ -1,0 +1,94 @@
+@prefix rr: <http://www.w3.org/ns/r2rml#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix ssg: <http://semsorgrid4env.eu/ns#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ssn: <http://purl.oclc.org/NET/ssnx/ssn#> .
+@prefix hsl: <http://hsl.linkeddata.es/data#> . 
+@prefix dul: <http://www.loa-cnr.it/ontologies/DUL.owl#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+@prefix quantity: <http://data.nasa.gov/qudt/owl/quantity#> .
+@prefix qudt: <http://data.nasa.gov/qudt/owl/qudt#> .
+@prefix void: <http://rdfs.org/ns/void#>.
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix morph: <http://oeg-upm.net/ns/morph#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix : <http://es.upm.fi.dia.oeg/R2RMapping#> .
+
+:hslStream rr:tableName "hsl"; morph:pk "vehicleid,route,lat,lon".
+
+:route a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/route/id/{route}";
+  				rr:class hsl:Route; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate hsl:routeId;
+				rr:objectMap [rr:column "{route}"]];
+.
+
+:direction a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/direction/{direction}";
+  				rr:class hsl:Direction; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate hsl:direction;
+				rr:objectMap [rr:column "{direction}"]];
+.
+
+:previousStop a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/previous/{previousstop}";
+  				rr:class hsl:PreviousStop; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate qudt:numericValue;
+				rr:objectMap [rr:column "{previousstop}"]];
+.
+
+:currentStop a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/current/{currentstop}";
+  				rr:class hsl:CurrentStop; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate qudt:numericValue;
+				rr:objectMap [rr:column "{currentstop}"]];
+.
+
+:departure a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/departure/{departure}";
+  				rr:class hsl:Departure; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate qudt:numericValue;
+				rr:objectMap [rr:column "{departure}"]];
+.
+
+:geometry a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/lat/{lat}/lon/{lon}";
+  				rr:class wgs84:Point; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate wgs84:lat;
+				rr:objectMap [rr:column "{lat}"]];
+  rr:predicateObjectMap [ rr:predicate wgs84:long;
+				rr:objectMap [rr:column "{lon}"]];
+.
+
+
+...
+
+
+
+:vehicle a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}"; 
+                 rr:class hsl:Vehicle;
+                 rr:graph hsl:hslLive.srdf];
+  rr:predicateObjectMap [rr:predicate dcterms:identifier;
+  				rr:objectMap [rr:column "vehicleid"]];
+  rr:predicateObjectMap [rr:predicate hsl:vehicleRoute;
+  				rr:objectMap [... ...]];
+  rr:predicateObjectMap [rr:predicate hsl:vehicleDirection;
+  				rr:objectMap [... ...]];
+  rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observedBy ];
+    					 rr:objectMap    [ rr:parentTriplesMap :device; rr:joinCondition "" ]];
+.
+

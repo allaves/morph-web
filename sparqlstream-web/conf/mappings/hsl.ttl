@@ -11,7 +11,8 @@
 @prefix void: <http://rdfs.org/ns/void#>.
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix morph: <http://oeg-upm.net/ns/morph#> .
-@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
+@prefix sf: <http://www.opengis.net/ont/sf#>
 @prefix : <http://es.upm.fi.dia.oeg/R2RMapping#> .
 
 :hslStream rr:tableName "hsl"; morph:pk "vehicleid,route,lat,lon".
@@ -64,18 +65,40 @@
 :geometry a rr:TriplesMap;
   rr:logicalTable :hslStream;
   rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/lat/{lat}/lon/{lon}";
-  				rr:class wgs84:Point; 
+  				rr:class geosparql:Geometry; 
                 rr:graph hsl:hslLive.srdf ];
-  rr:predicateObjectMap [ rr:predicate wgs84:lat;
-				rr:objectMap [rr:column "{lat}"]];
-  rr:predicateObjectMap [ rr:predicate wgs84:long;
-				rr:objectMap [rr:column "{lon}"]];
+  rr:predicateObjectMap [ rr:predicate geosparql:asWKT;
+				rr:objectMap [rr:template "\"POINT({lat} {lon})\"^^sf:WktLiteral"]];
 .
 
+:vehicleSensor a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/sensor/lat/{lat}/lon/{lon}";
+  				rr:class hsl:VehicleSensor; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate ssn:onPlatform;
+  				rr:objectMap [ rr:parentTriplesMap :vehicle; 
+  				rr:joinCondition "" ]];
+ .
 
-...
-
-
+:vehicleSensorOutput a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/sensorOutput/lat/{lat}/lon/{lon}";
+  				rr:class geosparql:Geometry; 
+                rr:graph hsl:hslLive.srdf ];
+  rr:predicateObjectMap [ rr:predicate hsl:hadPreviousStop;
+  				rr:objectMap [ rr:parentTriplesMap :previousStop; 
+  				rr:joinCondition "" ]];
+  rr:predicateObjectMap [ rr:predicate hsl:hasCurrentStop;
+  				rr:objectMap [ rr:parentTriplesMap :currentStop; 
+  				rr:joinCondition "" ]];
+  rr:predicateObjectMap [ rr:predicate hsl:hasDeparture;
+  				rr:objectMap [ rr:parentTriplesMap :departure; 
+  				rr:joinCondition "" ]];
+  rr:predicateObjectMap [ rr:predicate ssn:isProducedBy;
+  				rr:objectMap [ rr:parentTriplesMap :vehicleSensor; 
+  				rr:joinCondition "" ]];				
+ .
 
 :vehicle a rr:TriplesMap;
   rr:logicalTable :hslStream;
@@ -85,10 +108,28 @@
   rr:predicateObjectMap [rr:predicate dcterms:identifier;
   				rr:objectMap [rr:column "vehicleid"]];
   rr:predicateObjectMap [rr:predicate hsl:vehicleRoute;
-  				rr:objectMap [... ...]];
+  				rr:objectMap [ rr:parentTriplesMap :route; 
+    			rr:joinCondition "" ]];
   rr:predicateObjectMap [rr:predicate hsl:vehicleDirection;
-  				rr:objectMap [... ...]];
-  rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observedBy ];
-    					 rr:objectMap    [ rr:parentTriplesMap :device; rr:joinCondition "" ]];
+  				rr:objectMap [ rr:parentTriplesMap :direction; 
+    			rr:joinCondition "" ]];
+  rr:predicateObjectMap [rr:predicate geosparql:hasGeometry;
+  				rr:objectMap [ rr:parentTriplesMap :geometry; 
+    			rr:joinCondition "" ]];
 .
 
+:vehicleObservation a rr:TriplesMap;
+  rr:logicalTable :hslStream;
+  rr:subjectMap [rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/vehicleObservation/lat/{lat}/lon/{lon}"; 
+                rr:class hsl:VehicleObservation;
+                rr:graph hsl:hslLive.srdf];
+  rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observedBy ];
+    			rr:objectMap [ rr:parentTriplesMap :vehicleSensor; 
+    			rr:joinCondition "" ]];
+  rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observationResult ];
+    			rr:objectMap [ rr:parentTriplesMap :vehicleSensorOutput; 
+    			rr:joinCondition "" ]]; 
+  rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:featureOfInterest ];
+    			rr:objectMap [ rr:parentTriplesMap :vehicle; 
+    			rr:joinCondition "" ]];     
+.

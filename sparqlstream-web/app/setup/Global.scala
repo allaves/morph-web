@@ -3,10 +3,10 @@ package setup
 import play.api._
 import es.upm.fi.oeg.morph.esper.EsperServer
 import akka.actor.Props
-import es.upm.fi.oeg.siq.wrapper.ApiWrapper
 import play.api._
 import play.api.mvc._
 import play.api.mvc.Results._
+import es.upm.fi.oeg.siq.wrapper.ApiWrapper
 
 object Global extends GlobalSettings {
   lazy val esper = new EsperServer

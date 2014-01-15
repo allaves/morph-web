@@ -11,11 +11,14 @@ object ApplicationBuild extends Build {
       // Add your project dependencies here,
 
       "es.upm.fi.oeg.morph.streams" % "adapter-esper" % "1.0.9",
-      "es.upm.fi.oeg.morph.streams" % "adapter-gsn" % "1.0.7",
-      ("es.upm.fi.oeg.morph.streams" % "wrappers" % "1.0.7")
-        .exclude("org.slf4j", "slf4j-log4j12")
+      "es.upm.fi.oeg.morph.streams" % "adapter-gsn" % "1.0.7"//,
+      //("es.upm.fi.oeg.morph.streams" % "wrappers" % "1.0.7")
+       // .exclude("org.slf4j", "slf4j-log4j12")
         //"ch.qos.logback" % "logback-classic" % "1.0.9"
     )
+    
+    // Dependency on wrappers sub-project
+    lazy val wrappers = RootProject(file("../../morph-streams/wrappers"))
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
       // Add your own project settings here 
@@ -29,8 +32,8 @@ object ApplicationBuild extends Build {
          "aldebaran-releases" at "http://aldebaran.dia.fi.upm.es/artifactory/sstreams-releases-local",
          "plord" at "http://homepages.cs.ncl.ac.uk/phillip.lord/maven"
          //"jpc-repo" at "https://github.com/jpcik/jpc-repo/raw/master/repo"   
-        )        
-    )
+        )       
+    ).dependsOn(wrappers).aggregate(wrappers)
 
 
 }

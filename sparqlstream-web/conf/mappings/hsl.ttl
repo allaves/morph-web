@@ -12,7 +12,7 @@
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix morph: <http://oeg-upm.net/ns/morph#> .
 @prefix geosparql: <http://www.opengis.net/ont/geosparql#> .
-@prefix sf: <http://www.opengis.net/ont/sf#>
+@prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix : <http://es.upm.fi.dia.oeg/R2RMapping#> .
 
 :hslStream rr:tableName "hsl"; morph:pk "vehicleid,route,lat,lon".
@@ -35,16 +35,16 @@
 				rr:objectMap [rr:column "{direction}"]];
 .
 
-:previousStop a rr:TriplesMap;
+:previousstop a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/previous/{previousstop}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/previous/{previousStop}";
   				rr:class hsl:PreviousStop; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
 				rr:objectMap [rr:column "{previousstop}"]];
 .
 
-:currentStop a rr:TriplesMap;
+:currentstop a rr:TriplesMap;
   rr:logicalTable :hslStream;
   rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/current/{currentstop}";
   				rr:class hsl:CurrentStop; 
@@ -87,10 +87,10 @@
   				rr:class geosparql:Geometry; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate hsl:hadPreviousStop;
-  				rr:objectMap [ rr:parentTriplesMap :previousStop; 
+  				rr:objectMap [ rr:parentTriplesMap :previousstop; 
   				rr:joinCondition "" ]];
   rr:predicateObjectMap [ rr:predicate hsl:hasCurrentStop;
-  				rr:objectMap [ rr:parentTriplesMap :currentStop; 
+  				rr:objectMap [ rr:parentTriplesMap :currentstop; 
   				rr:joinCondition "" ]];
   rr:predicateObjectMap [ rr:predicate hsl:hasDeparture;
   				rr:objectMap [ rr:parentTriplesMap :departure; 

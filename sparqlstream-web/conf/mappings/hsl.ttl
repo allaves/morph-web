@@ -15,7 +15,7 @@
 @prefix sf: <http://www.opengis.net/ont/sf#> .
 @prefix : <http://es.upm.fi.dia.oeg/R2RMapping#> .
 
-:hslStream rr:tableName "hsl"; morph:pk "vehicleid,route,lat,lon".
+:hslStream rr:tableName "hsl"; morph:pk "vehicleid,route,timestamp".
 
 :route a rr:TriplesMap;
   rr:logicalTable :hslStream;
@@ -37,7 +37,7 @@
 
 :previousstop a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/previous/{previousStop}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/{route}/previousstop/{timestamp}";
   				rr:class hsl:PreviousStop; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
@@ -46,7 +46,7 @@
 
 :currentstop a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/stop/current/{currentstop}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/{route}/currentstop/{timestamp}";
   				rr:class hsl:CurrentStop; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
@@ -55,7 +55,7 @@
 
 :departure a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/departure/{departure}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/{route}/departure/{timestamp}";
   				rr:class hsl:Departure; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
@@ -64,7 +64,7 @@
 
 :geometry a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/lat/{lat}/lon/{lon}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/{route}/lat/lon/{timestamp}";
   				rr:class geosparql:Geometry; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate geosparql:asWKT;
@@ -73,7 +73,7 @@
 
 :vehicleSensor a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/sensor/lat/{lat}/lon/{lon}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/sensor";
   				rr:class hsl:VehicleSensor; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate ssn:onPlatform;
@@ -83,7 +83,7 @@
 
 :vehicleSensorOutput a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/sensorOutput/lat/{lat}/lon/{lon}";
+  rr:subjectMap [ rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/{route}/sensorOutput/{timestamp}";
   				rr:class geosparql:Geometry; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate hsl:hadPreviousStop;
@@ -120,7 +120,7 @@
 
 :vehicleObservation a rr:TriplesMap;
   rr:logicalTable :hslStream;
-  rr:subjectMap [rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/id/{route}/vehicleObservation/lat/{lat}/lon/{lon}"; 
+  rr:subjectMap [rr:template "http://hsl.linkeddata.es/vehicle/id/{vehicleid}/route/{route}/observation/{timestamp}"; 
                 rr:class hsl:VehicleObservation;
                 rr:graph hsl:hslLive.srdf];
   rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observedBy ];

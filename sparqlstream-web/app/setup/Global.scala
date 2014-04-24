@@ -16,9 +16,10 @@ object Global extends GlobalSettings {
     
     esper.startup
     new ApiWrapper("social",esper.system)
-    new ApiWrapper("hl7",esper.system)
-    new ApiWrapper("weathermap",esper.system)
-    new ApiWrapper("hsl", esper.system)
+    //new ApiWrapper("hl7",esper.system)
+    //new ApiWrapper("weathermap",esper.system)
+    //new ApiWrapper("hsl", esper.system)
+    new ApiWrapper("earthquakes", esper.system)
 
   }  
   

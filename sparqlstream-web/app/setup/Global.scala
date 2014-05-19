@@ -15,7 +15,7 @@ object Global extends GlobalSettings {
     Logger.info("Application has started") 
     
     esper.startup
-    new ApiWrapper("social",esper.system)
+    //new ApiWrapper("social",esper.system)
     //new ApiWrapper("hl7",esper.system)
     //new ApiWrapper("weathermap",esper.system)
     //new ApiWrapper("hsl", esper.system)

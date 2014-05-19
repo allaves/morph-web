@@ -22,21 +22,7 @@
   				rr:class time:Instant; 
                 rr:graph earthquakes:earthquakes.srdf ];
   rr:predicateObjectMap [ rr:predicate time:inXSDDateTime;
-				rr:objectMap [rr:template "\"{samplingtime}\"^^xsd:datetime"]];
-.
-
-:depth a rr:TriplesMap;
-  rr:logicalTable :earthquakesStream;
-  rr:subjectMap [ rr:template "http://sweet.jpl.nasa.gov/2.2/sweetAll.owl#Depth";
-  				rr:class ssn:Property; 
-                rr:graph earthquakes:earthquakes.srdf ];
-.
-
-:magnitude a rr:TriplesMap;
-  rr:logicalTable :earthquakesStream;
-  rr:subjectMap [ rr:template "http://sweet.jpl.nasa.gov/2.2/sweetAll.owl#EarthquakeScale";
-  				rr:class ssn:Property; 
-                rr:graph earthquakes:earthquakes.srdf ];  
+				rr:objectMap [rr:column "samplingtime"; rr:datatype xsd:dateTime]];
 .
 
 :geometry a rr:TriplesMap;
@@ -45,7 +31,8 @@
   				rr:class geosparql:Geometry; 
                 rr:graph earthquakes:earthquakes.srdf ];
   rr:predicateObjectMap [ rr:predicate geosparql:asWKT;
-				rr:objectMap [rr:template "\"<http://www.opengis.net/def/crs/EPSG/0/4258> POINT({lat} {lon})\"^^geosparql:WktLiteral"]];
+				rr:objectMap [rr:template "<http://www.opengis.net/def/crs/EPSG/0/4258> POINT({lat} {lon})"; 
+				rr:datatype geosparql:WktLiteral]];
 .
 
 :earthquake a rr:TriplesMap;
@@ -55,11 +42,9 @@
   				rr:class sweet:Earthquake;
                 rr:graph earthquakes:earthquakes.srdf ];
   rr:predicateObjectMap [ rr:predicate ssn:hasProperty;
-  				rr:objectMap [ rr:parentTriplesMap :depth; 
-  				rr:joinCondition "" ]];
+  				rr:objectMap [ rr:termType rr:IRI; rr:constant "http://sweet.jpl.nasa.gov/2.2/sweetAll.owl#Depth"]];
   rr:predicateObjectMap [ rr:predicate ssn:hasProperty;
-  				rr:objectMap [ rr:parentTriplesMap :magnitude; 
-  				rr:joinCondition "" ]];
+  				rr:objectMap [ rr:termType rr:IRI; rr:constant "http://sweet.jpl.nasa.gov/2.2/sweetAll.owl#EarthquakeScale"]];;
  .
 
 
@@ -68,7 +53,7 @@
   rr:subjectMap [rr:template "http://earthquakes.linkeddata.es/{eventid}/magnitudeSensorOutput";
   				 rr:class ssn:SensorOutput;
                  rr:graph earthquakes:earthquakes.srdf];
-  rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:hasValue ];
+  rr:predicateObjectMap [rr:predicateMap [ rr:termType rr:IRI; rr:constant ssn:hasValue ];
     			rr:objectMap [ rr:parentTriplesMap :magnitudeObservationValue; 
     			rr:joinCondition "" ]]; 
  .
@@ -79,7 +64,7 @@
   				rr:class ssn:ObservationValue; 
                 rr:graph earthquakes:earthquakes.srdf ];
   rr:predicateObjectMap [ rr:predicate dul:hasDataValue;
-				rr:objectMap [rr:template "\"{magnitude}\"^^xsd:float"]];
+				rr:objectMap [rr:column "magnitude"; rr:datatype xsd:float]];
 .
 
 :magnitudeObs a rr:TriplesMap;
@@ -95,8 +80,7 @@
     			rr:objectMap [ rr:parentTriplesMap :earthquake; 
     			rr:joinCondition "" ]];
   rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observedProperty ];
-    			rr:objectMap [ rr:parentTriplesMap :magnitude; 
-    			rr:joinCondition "" ]];    
+    			rr:objectMap [ rr:termType rr:IRI; rr:constant "http://sweet.jpl.nasa.gov/2.2/sweetAll.owl#EarthquakeScale"]];
   rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observationSamplingTime ];
     			rr:objectMap [ rr:parentTriplesMap :instant; 
     			rr:joinCondition "" ]];     	
@@ -121,10 +105,9 @@
   				rr:class ssn:ObservationValue; 
                 rr:graph earthquakes:earthquakes.srdf ];
   rr:predicateObjectMap [ rr:predicate dul:hasDataValue;
-				rr:objectMap [rr:template "\"{magnitude}\"^^xsd:float"]];
+				rr:objectMap [rr:column "depth"; rr:datatype xsd:int]];
   rr:predicateObjectMap [rr:predicateMap [ rr:constant dul:hasParameter ];
-    			rr:objectMap [ rr:parentTriplesMap :kilometer; 
-    			rr:joinCondition "" ]];
+    			rr:objectMap [ rr:termType rr:IRI; rr:constant "http://qudt.org/vocab/unit#Kilometer"]];
   .  			
 
 :depthObs a rr:TriplesMap;
@@ -140,8 +123,7 @@
     			rr:objectMap [ rr:parentTriplesMap :earthquake; 
     			rr:joinCondition "" ]];
   rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observedProperty ];
-    			rr:objectMap [ rr:parentTriplesMap :depth; 
-    			rr:joinCondition "" ]];    
+    			rr:objectMap [ rr:termType rr:IRI; rr:constant "http://sweet.jpl.nasa.gov/2.2/sweetAll.owl#Depth"]];
   rr:predicateObjectMap [rr:predicateMap [ rr:constant ssn:observationSamplingTime ];
     			rr:objectMap [ rr:parentTriplesMap :instant; 
     			rr:joinCondition "" ]];     	

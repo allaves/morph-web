@@ -85,7 +85,8 @@ http://www.espertech.com/schema/esper/esper-configuration-2.0.xsd">
     <map-property name="lat" class="double"/>
     <map-property name="lon" class="double"/>    
     <map-property name="depth" class="integer"/>    
-    <map-property name="magnitude" class="double"/>   
+    <map-property name="magnitude" class="double"/>
+    <map-property name="magnitudetype" class="string"/>    
     <map-property name="location" class="string"/>  
     <map-property name="timestamp" class="string"/>
   </java-util-map>

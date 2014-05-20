@@ -23,7 +23,7 @@
   				rr:class hsl:Route; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate hsl:routeId;
-				rr:objectMap [rr:column "{route}"]];
+				rr:objectMap [rr:column "route"]];
 .
 
 :direction a rr:TriplesMap;
@@ -32,7 +32,7 @@
   				rr:class hsl:Direction; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate hsl:direction;
-				rr:objectMap [rr:column "{direction}"]];
+				rr:objectMap [rr:column "direction"]];
 .
 
 :previousstop a rr:TriplesMap;
@@ -41,7 +41,7 @@
   				rr:class hsl:PreviousStop; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
-				rr:objectMap [rr:column "{previousstop}"]];
+				rr:objectMap [rr:column "previousstop"]];
 .
 
 :currentstop a rr:TriplesMap;
@@ -50,7 +50,7 @@
   				rr:class hsl:CurrentStop; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
-				rr:objectMap [rr:column "{currentstop}"]];
+				rr:objectMap [rr:column "currentstop"]];
 .
 
 :departure a rr:TriplesMap;
@@ -59,7 +59,7 @@
   				rr:class hsl:Departure; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate qudt:numericValue;
-				rr:objectMap [rr:column "{departure}"]];
+				rr:objectMap [rr:column "departure"]];
 .
 
 :geometry a rr:TriplesMap;
@@ -68,7 +68,7 @@
   				rr:class geosparql:Geometry; 
                 rr:graph hsl:hslLive.srdf ];
   rr:predicateObjectMap [ rr:predicate geosparql:asWKT;
-				rr:objectMap [rr:template "\"POINT({lat} {lon})\"^^sf:WktLiteral"]];
+				rr:objectMap [rr:template "POINT({lat} {lon})"; rr:datatype sf:WktLiteral]];
 .
 
 :vehicleSensor a rr:TriplesMap;
